@@ -5,6 +5,7 @@ using DotNetCoreSqlDb.Models;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using System.Text;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DotNetCoreSqlDb.Controllers
 {
@@ -13,14 +14,16 @@ namespace DotNetCoreSqlDb.Controllers
     {
         private readonly ILogger<TodosController> _logger;
         private readonly MyDatabaseContext _context;
+        private readonly IHttpContextAccessor _accessor;
         private readonly IDistributedCache _cache;
         private readonly string _TodoItemsCacheKey = "TodoItemsList";
 
-        public TodosController(MyDatabaseContext context, IDistributedCache cache, ILogger<TodosController> logger)
+        public TodosController(MyDatabaseContext context, IDistributedCache cache, ILogger<TodosController> logger, IHttpContextAccessor accessor)
         {
             _context = context;
             _cache = cache;
             _logger = logger;
+            _accessor = accessor;
         }
 
         // GET: Todos
